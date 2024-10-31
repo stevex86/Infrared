@@ -2,13 +2,13 @@ import EventEmitter from "events";
 import HookEvent from "../hook.js";
 
 /**
- * @typedef {import('../index').default} UVClient
+ * @typedef {import('../index').default} IRClient
  */
 
 class AttrApi extends EventEmitter {
 	/**
 	 *
-	 * @param {UVClient} ctx
+	 * @param {IRClient} ctx
 	 */
 	constructor(ctx) {
 		super();

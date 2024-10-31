@@ -3,13 +3,13 @@ import HookEvent from "./hook.js";
 import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
 
 /**
- * @typedef {import('./index').default} UVClient
+ * @typedef {import('./index').default} IRClient
  */
 
 class Workers extends EventEmitter {
 	/**
 	 *
-	 * @param {UVClient} ctx
+	 * @param {IRClient} ctx
 	 */
 	constructor(ctx) {
 		super();
@@ -44,7 +44,7 @@ class Workers extends EventEmitter {
 					const port = await conn.getInnerPort();
 					worker.postMessage(
 						{
-							__uv$type: "baremuxinit",
+							__ir$type: "baremuxinit",
 							port,
 						},
 						[port]

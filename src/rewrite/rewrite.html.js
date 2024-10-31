@@ -1,10 +1,10 @@
 /**
- * @typedef {import('./index').default} Ultraviolet
+ * @typedef {import('./index').default} Infrared
  */
 
 /**
  *
- * @param {Ultraviolet} ctx
+ * @param {Infrared} ctx
  */
 export function attributes(ctx, meta = ctx.meta) {
 	const { html, js, attributePrefix } = ctx;
@@ -78,7 +78,7 @@ export function attributes(ctx, meta = ctx.meta) {
 
 /**
  *
- * @param {Ultraviolet} ctx
+ * @param {Infrared} ctx
  */
 export function text(ctx) {
 	const { html, js, css } = ctx;
@@ -191,7 +191,7 @@ export function isEvent(name) {
 
 /**
  *
- * @param {Ultraviolet} ctx
+ * @param {Infrared} ctx
  */
 export function injectHead(ctx) {
 	const { html } = ctx;
@@ -206,8 +206,8 @@ export function injectHead(ctx) {
 
 export function createJsInject(cookies = "", referrer = "") {
 	return (
-		`self.__uv$cookies = ${JSON.stringify(cookies)};` +
-		`self.__uv$referrer = ${JSON.stringify(referrer)};`
+		`self.__ir$cookies = ${JSON.stringify(cookies)};` +
+		`self.__ir$referrer = ${JSON.stringify(referrer)};`
 	);
 }
 
@@ -231,7 +231,7 @@ export function createHtmlInject(
 			],
 			attrs: [
 				{
-					name: "__uv-script",
+					name: "__ir-script",
 					value: "1",
 					skip: true,
 				},
@@ -245,7 +245,7 @@ export function createHtmlInject(
 			attrs: [
 				{ name: "src", value: bundleScript, skip: true },
 				{
-					name: "__uv-script",
+					name: "__ir-script",
 					value: "1",
 					skip: true,
 				},
@@ -258,7 +258,7 @@ export function createHtmlInject(
 			attrs: [
 				{ name: "src", value: clientScript, skip: true },
 				{
-					name: "__uv-script",
+					name: "__ir-script",
 					value: "1",
 					skip: true,
 				},
@@ -271,7 +271,7 @@ export function createHtmlInject(
 			attrs: [
 				{ name: "src", value: configScript, skip: true },
 				{
-					name: "__uv-script",
+					name: "__ir-script",
 					value: "1",
 					skip: true,
 				},
@@ -284,7 +284,7 @@ export function createHtmlInject(
 			attrs: [
 				{ name: "src", value: handlerScript, skip: true },
 				{
-					name: "__uv-script",
+					name: "__ir-script",
 					value: "1",
 					skip: true,
 				},

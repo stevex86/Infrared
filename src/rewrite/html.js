@@ -2,13 +2,13 @@ import EventEmitter from "events";
 import { parse, parseFragment, serialize } from "parse5";
 
 /**
- * @typedef {import('./index').default} Ultraviolet
+ * @typedef {import('./index').default} Infrared
  */
 
 class HTML extends EventEmitter {
 	/**
 	 *
-	 * @param {Ultraviolet} ctx
+	 * @param {Infrared} ctx
 	 */
 	constructor(ctx) {
 		super();

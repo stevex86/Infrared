@@ -1,5 +1,5 @@
-declare const uvPath: string;
+declare const irPath: string;
 
-export { uvPath };
+export { irPath };
 
-export * from "../uv";
+export * from "../ir";

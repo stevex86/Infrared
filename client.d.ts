@@ -1,3 +1,3 @@
-declare const Ultraviolet: typeof import("./uv").Ultraviolet;
+declare const Infrared: typeof import("./ir").Infrared;
 
-declare var __uv$config: import("./uv").UVConfig;
+declare var __ir$config: import("./ir").IRConfig;

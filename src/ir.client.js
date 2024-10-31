@@ -1,23 +1,23 @@
-import DocumentHook from "./dom/document.js";
-import ElementApi from "./dom/element.js";
-import NodeApi from "./dom/node.js";
-import AttrApi from "./dom/attr.js";
-import FunctionHook from "./native/function.js";
-import ObjectHook from "./native/object.js";
-import Fetch from "./requests/fetch.js";
-import Xhr from "./requests/xhr.js";
-import EventSourceApi from "./requests/eventsource.js";
-import History from "./history.js";
-import LocationApi from "./location.js";
-import MessageApi from "./message.js";
-import NavigatorApi from "./navigator.js";
-import Workers from "./worker.js";
-import URLApi from "./url.js";
+import DocumentHook from "./client/dom/document.js";
+import ElementApi from "./client/dom/element.js";
+import NodeApi from "./client/dom/node.js";
+import AttrApi from "./client/dom/attr.js";
+import FunctionHook from "./client/native/function.js";
+import ObjectHook from "./client/native/object.js";
+import Fetch from "./client/requests/fetch.js";
+import Xhr from "./client/requests/xhr.js";
+import EventSourceApi from "./client/requests/eventsource.js";
+import History from "./client/history.js";
+import LocationApi from "./client/location.js";
+import MessageApi from "./client/message.js";
+import NavigatorApi from "./client/navigator.js";
+import Workers from "./client/worker.js";
+import URLApi from "./client/url.js";
 import EventEmitter from "events";
-import StorageApi from "./storage.js";
-import StyleApi from "./dom/style.js";
-import IDBApi from "./idb.js";
-import WebSocketApi from "./requests/websocket.js";
+import StorageApi from "./client/storage.js";
+import StyleApi from "./client/dom/style.js";
+import IDBApi from "./client/idb.js";
+import WebSocketApi from "./client/requests/websocket.js";
 
 /**
  * @template {Function} [T=Function]
@@ -30,7 +30,7 @@ import WebSocketApi from "./requests/websocket.js";
  * @property {WrapFun} [set]
  */
 
-class UVClient extends EventEmitter {
+class IRClient extends EventEmitter {
 	/**
 	 *
 	 * @param {typeof globalThis} window
@@ -165,5 +165,5 @@ class UVClient extends EventEmitter {
 	}
 }
 
-export default UVClient;
-if (typeof self === "object") self.UVClient = UVClient;
+export default IRClient;
+if (typeof self === "object") self.IRClient = IRClient;

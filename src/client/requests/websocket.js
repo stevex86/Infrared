@@ -2,13 +2,13 @@ import EventEmitter from "events";
 import HookEvent from "../hook.js";
 
 /**
- * @typedef {import('../index').default} UVClient
+ * @typedef {import('../index').default} IRClient
  */
 
 class WebSocketApi extends EventEmitter {
 	/**
 	 *
-	 * @param {UVClient} ctx
+	 * @param {IRClient} ctx
 	 */
 	constructor(ctx) {
 		super();
@@ -42,7 +42,7 @@ class WebSocketApi extends EventEmitter {
 
 				const barews = client.createWebSocket(args[0], args[1], null, {
 					"User-Agent": navigator.userAgent,
-					Origin: __uv.meta.url.origin,
+					Origin: __ir.meta.url.origin,
 				});
 
 				const state = {

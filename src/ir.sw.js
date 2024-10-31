@@ -1,11 +1,11 @@
-/*globals __uv$config*/
-// Users must import the config (and bundle) prior to importing uv.sw.js
+/*globals __ir$config*/
+// Users must import the config (and bundle) prior to importing ir.sw.js
 // This is to allow us to produce a generic bundle with no hard-coded paths.
 
 /**
- * @type {import('../uv').UltravioletCtor}
+ * @type {import('../ir').InfraredCtor}
  */
-const Ultraviolet = self.Ultraviolet;
+const Infrared = self.Infrared;
 
 const cspHeaders = [
 	"cross-origin-embedder-policy",
@@ -27,15 +27,15 @@ const cspHeaders = [
 ];
 const emptyMethods = ["GET", "HEAD"];
 
-class UVServiceWorker extends Ultraviolet.EventEmitter {
-	constructor(config = __uv$config) {
+class IRServiceWorker extends Infrared.EventEmitter {
+	constructor(config = __ir$config) {
 		super();
 		if (!config.prefix) config.prefix = "/service/";
 		this.config = config;
 		/**
-		 * @type {InstanceType<Ultraviolet['BareClient']>}
+		 * @type {InstanceType<Infrared['BareClient']>}
 		 */
-		this.bareClient = new Ultraviolet.BareClient();
+		this.bareClient = new Infrared.BareClient();
 	}
 	/**
 	 *
@@ -62,7 +62,7 @@ class UVServiceWorker extends Ultraviolet.EventEmitter {
 			if (!request.url.startsWith(location.origin + this.config.prefix))
 				return await fetch(request);
 
-			const ultraviolet = new Ultraviolet(this.config);
+			const ultraviolet = new Infrared(this.config);
 
 			if (typeof this.config.construct === "function") {
 				this.config.construct(ultraviolet, "service");
@@ -206,7 +206,7 @@ class UVServiceWorker extends Ultraviolet.EventEmitter {
 							]
 								.map((script) => JSON.stringify(script))
 								.join(",");
-							responseCtx.body = `if (!self.__uv) {
+							responseCtx.body = `if (!self.__ir) {
                                 ${ultraviolet.createJsInject(
 																	ultraviolet.cookie.serialize(
 																		cookies,
@@ -300,10 +300,10 @@ class UVServiceWorker extends Ultraviolet.EventEmitter {
 			return renderError(err, fetchedURL);
 		}
 	}
-	static Ultraviolet = Ultraviolet;
+	static Infrared = Infrared;
 }
 
-self.UVServiceWorker = UVServiceWorker;
+self.IRServiceWorker = IRServiceWorker;
 
 class ResponseContext {
 	/**
@@ -346,7 +346,7 @@ class RequestContext {
 	/**
 	 *
 	 * @param {Request} request
-	 * @param {Ultraviolet} ultraviolet
+	 * @param {Infrared} ultraviolet
 	 * @param {BodyInit} body
 	 */
 	constructor(request, ultraviolet, body = null) {
@@ -408,15 +408,15 @@ function errorTemplate(trace, fetchedURL) {
 	const script = `
         errorTrace.value = ${JSON.stringify(trace)};
         fetchedURL.textContent = ${JSON.stringify(fetchedURL)};
-        for (const node of document.querySelectorAll("#uvHostname")) node.textContent = ${JSON.stringify(
+        for (const node of document.querySelectorAll("#irHostname")) node.textContent = ${JSON.stringify(
 					location.hostname
 				)};
         reload.addEventListener("click", () => location.reload());
-        uvVersion.textContent = ${JSON.stringify(
-					process.env.ULTRAVIOLET_VERSION
+        irVersion.textContent = ${JSON.stringify(
+					process.env.INFRARED_VERSION
 				)};
-        uvBuild.textContent = ${JSON.stringify(
-					process.env.ULTRAVIOLET_COMMIT_HASH
+        irBuild.textContent = ${JSON.stringify(
+					process.env.INFRARED_COMMIT_HASH
 				)};
     `;
 
@@ -440,18 +440,18 @@ function errorTemplate(trace, fetchedURL) {
         <li>Checking your internet connection</li>
         <li>Verifying you entered the correct address</li>
         <li>Clearing the site data</li>
-        <li>Contacting <b id="uvHostname"></b>'s administrator</li>
+        <li>Contacting <b id="irHostname"></b>'s administrator</li>
         <li>Verify the server isn't censored</li>
         </ul>
-        <p>If you're the administrator of <b id="uvHostname"></b>, try:</p>
+        <p>If you're the administrator of <b id="irHostname"></b>, try:</p>
         <ul>
         <li>Restarting your server</li>
-        <li>Updating Ultraviolet</li>
-        <li>Troubleshooting the error on the <a href="https://github.com/titaniumnetwork-dev/Ultraviolet" target="_blank">GitHub repository</a></li>
+        <li>Updating Infrared</li>
+        <li>Troubleshooting the error on the <a href="https://github.com/titaniumnetwork-dev/Infrared" target="_blank">GitHub repository</a></li>
         </ul>
         <button id="reload">Reload</button>
         <hr />
-        <p><i>Ultraviolet v<span id="uvVersion"></span> (build <span id="uvBuild"></span>)</i></p>
+        <p><i>Infrared v<span id="irVersion"></span> (build <span id="irBuild"></span>)</i></p>
         <script src="${
 					"data:application/javascript," + encodeURIComponent(script)
 				}"></script>

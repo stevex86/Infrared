@@ -6,19 +6,19 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/titaniumnetwork-dev/Ultraviolet.git"
+		"url": "git+https://github.com/titaniumnetwork-dev/Infrared.git"
 	},
 	"files": [
 		"dist",
 		"lib",
-		"uv.d.ts",
+		"ir.d.ts",
 		"client.d.ts"
 	],
 	"type": "module",
 	"scripts": {
-		"build": "node build.js",
-		"dev": "node build.js --dev",
-		"prepack": "npm run build",
+		"build": "bun run build.js",
+		"dev": "bun run build.js --dev",
+		"prepack": "bun run build",
 		"format": "prettier --config .prettierrc.js --write .",
 		"lint": "eslint ./src/",
 		"lint:fix": "eslint ./src/ --fix"
@@ -26,7 +26,6 @@
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.1.0",
 		"@eslint/js": "^9.13.0",
-		"esbuild": "^0.24.0",
 		"eslint": "^9.13.0",
 		"globals": "^15.11.0",
 		"prettier": "^3.3.3",
@@ -35,6 +34,7 @@
 	"dependencies": {
 		"@mercuryworkshop/bare-mux": "^2.1.6",
 		"astring": "^1.9.0",
+		"bun": "^1.1.33",
 		"events": "^3.3.0",
 		"idb": "^8.0.0",
 		"meriyah": "^6.0.2",

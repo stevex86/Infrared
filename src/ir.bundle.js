@@ -1,15 +1,15 @@
-import HTML from "./html.js";
-import CSS from "./css.js";
-import JS from "./js.js";
+import HTML from "./rewrite/html.js";
+import CSS from "./rewrite/css.js";
+import JS from "./rewrite/js.js";
 import setCookie from "set-cookie-parser";
-import { xor, base64, plain } from "./codecs.js";
+import { xor, base64, plain } from "./rewrite/codecs.js";
 import {
 	validateCookie,
 	db,
 	getCookies,
 	setCookies,
 	serialize,
-} from "./cookie.js";
+} from "./rewrite/cookie.js";
 import {
 	attributes,
 	isUrl,
@@ -21,7 +21,7 @@ import {
 	injectHead,
 	createHtmlInject,
 	createJsInject,
-} from "./rewrite.html.js";
+} from "./rewrite/rewrite.html.js";
 //import { call, destructureDeclaration, dynamicImport, getProperty, importDeclaration, setProperty, sourceMethods, wrapEval, wrapIdentifier } from './rewrite.script.js';
 import {
 	dynamicImport,
@@ -30,19 +30,19 @@ import {
 	property,
 	unwrap,
 	wrapEval,
-} from "./rewrite.script.js";
+} from "./rewrite/rewrite.script.js";
 import { openDB } from "idb";
 import { BareClient } from "@mercuryworkshop/bare-mux";
 import EventEmitter from "events";
 
 /**
- * @typedef {import('../uv.js').UVConfig} UVConfig
+ * @typedef {import('../ir.js').IRConfig} IRConfig
  */
 
-class Ultraviolet {
+class Infrared {
 	/**
 	 *
-	 * @param {UVConfig} [options]
+	 * @param {IRConfig} [options]
 	 */
 	constructor(options = {}) {
 		this.prefix = options.prefix || "/service/";
@@ -57,24 +57,24 @@ class Ultraviolet {
 		this.meta = options.meta || {};
 		this.meta.base ||= undefined;
 		this.meta.origin ||= "";
-		this.bundleScript = options.bundle || "/uv.bundle.js";
-		this.handlerScript = options.handler || "/uv.handler.js";
+		this.bundleScript = options.bundle || "/ir.bundle.js";
+		this.handlerScript = options.handler || "/ir.handler.js";
 		this.clientScript =
 			options.client ||
 			(options.bundle &&
-				options.bundle.includes("uv.bundle.js") &&
-				options.bundle.replace("uv.bundle.js", "uv.client.js")) ||
-			"/uv.client.js";
-		this.configScript = options.config || "/uv.config.js";
+				options.bundle.includes("ir.bundle.js") &&
+				options.bundle.replace("ir.bundle.js", "ir.client.js")) ||
+			"/ir.client.js";
+		this.configScript = options.config || "/ir.config.js";
 		this.meta.url ||= this.meta.base || "";
-		this.codec = Ultraviolet.codec;
+		this.codec = Infrared.codec;
 		this.html = new HTML(this);
 		this.css = new CSS(this);
 		this.js = new JS(this);
 		this.openDB = this.constructor.openDB;
-		this.master = "__uv";
-		this.dataPrefix = "__uv$";
-		this.attributePrefix = "__uv";
+		this.master = "__ir";
+		this.dataPrefix = "__ir$";
+		this.attributePrefix = "__ir";
 		this.createHtmlInject = createHtmlInject;
 		this.createJsInject = createJsInject;
 		this.attrs = {
@@ -84,7 +84,7 @@ class Ultraviolet {
 			isSrcset,
 			isStyle,
 		};
-		if (!this.vanilla) this.implementUVMiddleware();
+		if (!this.vanilla) this.implementIRMiddleware();
 		this.cookie = {
 			validateCookie,
 			db: () => {
@@ -142,7 +142,7 @@ class Ultraviolet {
 	decodeUrl(str) {
 		return decodeURIComponent(str);
 	}
-	implementUVMiddleware() {
+	implementIRMiddleware() {
 		// HTML
 		attributes(this);
 		text(this);
@@ -180,5 +180,5 @@ class Ultraviolet {
 	static EventEmitter = EventEmitter;
 }
 
-export default Ultraviolet;
-if (typeof self === "object") self.Ultraviolet = Ultraviolet;
+export default Infrared;
+if (typeof self === "object") self.Infrared = Infrared;

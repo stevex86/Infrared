@@ -1,11 +1,9 @@
 import { rimraf } from "rimraf";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
-import { build } from "esbuild";
 import { execSync } from "node:child_process";
+import pkg from "./package.json"
 
-// read version from package.json
-const pkg = JSON.parse(await readFile("package.json"));
-process.env.ULTRAVIOLET_VERSION = pkg.version;
+process.env.INFRARED_VERSION = pkg.version;
 
 const isDevelopment = process.argv.includes("--dev");
 
@@ -14,23 +12,23 @@ await mkdir("dist");
 
 // don't compile these files
 await copyFile("src/sw.js", "dist/sw.js");
-await copyFile("src/uv.config.js", "dist/uv.config.js");
+await copyFile("src/ir.config.js", "dist/ir.config.js");
 
-let builder = await build({
-	platform: "browser",
-	sourcemap: true,
+let builder = await Bun.build({
+	target: "browser",
+	sourcemap: "external",
 	minify: !isDevelopment,
-	entryPoints: {
-		"uv.bundle": "./src/rewrite/index.js",
-		"uv.client": "./src/client/index.js",
-		"uv.handler": "./src/uv.handler.js",
-		"uv.sw": "./src/uv.sw.js",
-	},
+	entrypoints: [
+		"./src/ir.bundle.js",
+		"./src/ir.client.js",
+		"./src/ir.handler.js",
+		"./src/ir.sw.js",
+	],
 	define: {
-		"process.env.ULTRAVIOLET_VERSION": JSON.stringify(
-			process.env.ULTRAVIOLET_VERSION
+		"process.env.INFRARED_VERSION": JSON.stringify(
+			process.env.INFRARED_VERSION
 		),
-		"process.env.ULTRAVIOLET_COMMIT_HASH": (() => {
+		"process.env.INFRARED_COMMIT_HASH": (() => {
 			try {
 				let hash = JSON.stringify(
 					execSync("git rev-parse --short HEAD", {
@@ -46,10 +44,6 @@ let builder = await build({
 	},
 	bundle: true,
 	treeShaking: true,
-	metafile: isDevelopment,
 	logLevel: "info",
 	outdir: "dist/",
 });
-if (isDevelopment) {
-	await writeFile("metafile.json", JSON.stringify(builder.metafile));
-}

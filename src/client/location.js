@@ -1,13 +1,13 @@
 import EventEmitter from "events";
 
 /**
- * @typedef {import('./index').default} UVClient
+ * @typedef {import('./index').default} IRClient
  */
 
 class LocationApi extends EventEmitter {
 	/**
 	 *
-	 * @param {UVClient} ctx
+	 * @param {IRClient} ctx
 	 */
 	constructor(ctx) {
 		super();
@@ -36,12 +36,12 @@ class LocationApi extends EventEmitter {
 	}
 	overrideWorkerLocation(parse) {
 		if (!this.WorkerLocation) return false;
-		const uv = this;
+		const ir = this;
 
 		for (const key of this.keys) {
 			this.ctx.overrideDescriptor(this.workerLocProto, key, {
 				get: () => {
-					return parse(uv.href.get.call(this.location))[key];
+					return parse(ir.href.get.call(this.location))[key];
 				},
 			});
 		}
